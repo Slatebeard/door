@@ -1,10 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Main {
-        public static ArrayList<Material> materials = new ArrayList<>();
-        public static ArrayList<Door> doors = new ArrayList<>();
+        public static List<Material> materials = new ArrayList<>();
+        public static List<Door> doors = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -26,7 +26,7 @@ public class Main {
 
     private static void printAll() {
         for(Door door: doors) {
-            System.out.println("Door n." + doors.indexOf(door) + ": ");
+            System.out.println("Door n." + (doors.indexOf(door)+1) + ": ");
             door.printALl();
             System.out.println("-----------------------------------");
         }
@@ -63,7 +63,7 @@ public class Main {
             for (Material materialItem : materials) {
                 System.out.print(materials.indexOf(materialItem));
                 System.out.print(": ");
-                System.out.println(materialItem.getName());
+                System.out.println(materialItem.getNAME());
             }
 
             Scanner in = new Scanner(System.in);
