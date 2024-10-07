@@ -1,13 +1,11 @@
-import java.util.HashMap;
-
 public class Door {
 
     private boolean isOpen;
     private boolean isClosed;
     private boolean isLocked;
     public static String[] doorColors = {"Oak", "Black", "Silver", "Transparent"};
-    private String doorMaterial;
-    private String doorColor;
+    private Material doorMaterial;
+    private String color;
     private double depth;
     private double height;
     private double width;
@@ -20,14 +18,14 @@ public class Door {
         isOpen = open;
     }
 
-    public Door(boolean isOpen, boolean isClosed, boolean isLocked, String doorMaterial, String doorColor, double depth, double height, double width) {
+    public Door(boolean isOpen, boolean isClosed, boolean isLocked, Material doorMaterial, String color, double depth, double height, double width) {
         this.isOpen = isOpen;
         this.isClosed = isClosed;
         this.isLocked = isLocked;
         this.doorMaterial = doorMaterial;
-        this.doorColor = doorColor;
+        this.color = color;
         this.depth = depth;
-        this.height = height;
+        this.height = getWeight();
         this.width = width;
     }
 
@@ -48,12 +46,12 @@ public class Door {
     }
 
 
-    public String[] getDoorColor() {
+    public String[] getColor() {
         return doorColors;
     }
 
-    public void setDoorColor(String[] doorColor) {
-        this.doorColors = doorColor;
+    public void setColor(String[] color) {
+        this.doorColors = color;
     }
 
     public double getDepth() {
@@ -81,12 +79,17 @@ public class Door {
     }
 
     public double getWeight(){
-        return height*width*depth*Materials.getDensity();
+        return height*width*depth*doorMaterial.getDensity();
     }
 
-    public static HashMap<String, Double> getMaterialsDensities(){
-        return materialsDensities;
+    public void printALl(){
+        System.out.println("Material: " + this.doorMaterial.getName());
+        System.out.println("Width: " + this.width);
+        System.out.println("Height: " + this.height);
+        System.out.println("Depth: " + this.depth);
+        System.out.println("Weight: " + this.getWeight());
+        System.out.println("Colour: " + this.color);
     }
+
 
 }
-
