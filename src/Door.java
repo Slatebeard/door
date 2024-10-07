@@ -1,95 +1,82 @@
-public class Door {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-    private boolean isOpen;
-    private boolean isClosed;
-    private boolean isLocked;
-    public static String[] doorColors = {"Oak", "Black", "Silver", "Transparent"};
-    private Material doorMaterial;
-    private String color;
-    private double depth;
-    private double height;
-    private double width;
+public class Main {
+        public static List<Material> materials = new ArrayList<>();
+        public static List<Door> doors = new ArrayList<>();
 
-    public boolean isOpen() {
-        return isOpen;
+    public static void main(String[] args) {
+
+        Material wood = new Material("Wood", 1000);
+        materials.add(wood);
+        Material metal = new Material("Metal", 2000);
+        materials.add(metal);
+        Material stone = new Material("Stone", 9999);
+        materials.add(stone);
+
+        System.out.println("Speak friend and enter...");
+        doors.add(new Door(false, true, true, askUserMaterial(), askUserDoorColor(), 120.0, 123.0, 23.0));
+        doors.add(new Door(false, true, true, askUserMaterial(), askUserDoorColor(), 120.0, 123.0, 23.0));
+        doors.add(new Door(false, true, true, askUserMaterial(), askUserDoorColor(), 120.0, 123.0, 23.0));
+
+        printAll();
+
     }
 
-    public void setOpen(boolean open) {
-        isOpen = open;
+    private static void printAll() {
+        for(Door door: doors) {
+            System.out.println("Door n." + (doors.indexOf(door)+1) + ": ");
+            door.printALl();
+            System.out.println("-----------------------------------");
+        }
     }
 
-    public Door(boolean isOpen, boolean isClosed, boolean isLocked, Material doorMaterial, String color, double depth, double height, double width) {
-        this.isOpen = isOpen;
-        this.isClosed = isClosed;
-        this.isLocked = isLocked;
-        this.doorMaterial = doorMaterial;
-        this.color = color;
-        this.depth = depth;
-        this.height = getWeight();
-        this.width = width;
+    private static String askUserDoorColor() {
+        boolean isValidInput;
+        int userChoice;
+        do {
+            System.out.println("Please indicate which colour the door have:");
+            int i = 0;
+            for (String colour : Door.doorColors) {
+                System.out.print(i + ": ");
+                System.out.println(colour);
+                i++;
+            }
+            Scanner in = new Scanner(System.in);
+            userChoice = in.nextInt();
+            in.nextLine();
+            isValidInput = (userChoice >= 0 && userChoice < Door.doorColors.length);
+            if (!isValidInput) {
+                System.out.println("Invalid choice.");
+            }
+        } while (!isValidInput);
+        return Door.doorColors[userChoice];
     }
 
-    public boolean isClosed() {
-        return isClosed;
+    public static Material askUserMaterial(){
+        boolean isMaterialChoiceValid;
+        int chosenMaterial;
+        do {
+
+            System.out.println("Please indicate which material the door must have among the following:");
+            for (Material materialItem : materials) {
+                System.out.print(materials.indexOf(materialItem));
+                System.out.print(": ");
+                System.out.println(materialItem.getNAME());
+            }
+
+            Scanner in = new Scanner(System.in);
+            chosenMaterial = in.nextInt();
+            in.nextLine();
+
+            isMaterialChoiceValid = (chosenMaterial >= 0 && chosenMaterial < materials.size());
+            if (!isMaterialChoiceValid) {
+                System.out.println("That material does not exist.");
+            }
+
+        } while(!isMaterialChoiceValid);
+        return materials.get(chosenMaterial);
     }
-
-    public void setClosed(boolean closed) {
-        isClosed = closed;
-    }
-
-    public boolean isLocked() {
-        return isLocked;
-    }
-
-    public void setLocked(boolean locked) {
-        isLocked = locked;
-    }
-
-
-    public String[] getColor() {
-        return doorColors;
-    }
-
-    public void setColor(String[] color) {
-        this.doorColors = color;
-    }
-
-    public double getDepth() {
-        return depth;
-    }
-
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public double getWeight(){
-        return height*width*depth*doorMaterial.getDensity();
-    }
-
-    public void printALl(){
-        System.out.println("Material: " + this.doorMaterial.getName());
-        System.out.println("Width: " + this.width);
-        System.out.println("Height: " + this.height);
-        System.out.println("Depth: " + this.depth);
-        System.out.println("Weight: " + this.getWeight());
-        System.out.println("Colour: " + this.color);
-    }
-
 
 }
